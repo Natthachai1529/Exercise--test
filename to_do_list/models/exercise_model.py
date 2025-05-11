@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
 
 class ExampleModel(models.Model):
     _name = 'exercise.model'
