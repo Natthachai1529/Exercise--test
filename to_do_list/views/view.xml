@@ -23,7 +23,7 @@
                     <group>
                         <group> 
                             <field name="title"/>  
-                            <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                         <group>
                             <field name="start_date"/> 
