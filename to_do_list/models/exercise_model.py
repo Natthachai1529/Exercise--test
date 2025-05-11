@@ -20,8 +20,7 @@ class ExampleModel(models.Model):
 
     def _get_default_tags(self):
         tags = self.env['product.tags'].search([('name', 'in', ['Work', 'Event', 'Life'])])
-        
-  
+   
         if len(tags) < 3:
             existing_tags = tags.mapped('name')
             if 'Work' not in existing_tags:
@@ -31,7 +30,7 @@ class ExampleModel(models.Model):
             if 'Life' not in existing_tags:
                 self.env['product.tags'].create({'name': 'Life'})
             tags = self.env['product.tags'].search([('name', 'in', ['Work', 'Event', 'Life'])])
-        
+
         return tags
 
     list_ids = fields.One2many(comodel_name='model.list', inverse_name='list_id', string='Lists')
