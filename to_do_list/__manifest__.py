@@ -8,5 +8,5 @@
         'views/view.xml', 
     ],
     'application': True,
-    'license': 'MIT',
+    'license': 'LGPL-3',
 }
