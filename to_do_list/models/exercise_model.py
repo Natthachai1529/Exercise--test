@@ -57,7 +57,7 @@ class ListModel(models.Model):
     name = fields.Char(string='Name')
     description = fields.Char(string="Description") 
     is_complete = fields.Boolean(string='Is Complete')
-    tag_ids = fields.Many2many(comodel_name='exercise.tag', string='Tags')  # If you need tags for lists
+    tag_ids = fields.Many2many(comodel_name='exercise.tag', string='Tags')
 
 class AttendeeModel(models.Model):
     _name = 'model.attendee'
