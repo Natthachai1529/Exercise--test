@@ -26,6 +26,13 @@ class ExampleModel(models.Model):
 
     all_complete = fields.Boolean(string='All List Completed', compute='_compute_all_complete')
 
+    @api.constrains('start_date', 'end_date')
+    def _check_dates(self):
+        for record in self:
+            if record.start_date and record.end_date:
+                if record.start_date > record.end_date:
+                    raise ValidationError("Start date cannot be later than end date.")
+
     @api.depends('list_ids.is_complete')
     def _compute_all_complete(self):
         for record in self:
