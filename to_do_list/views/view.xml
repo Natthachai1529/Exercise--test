@@ -23,12 +23,7 @@
                     <group>
                         <group> 
                             <field name="title"/>  
-                            <field name="tag_ids" widget="many2many_tags"
-                                   value="[(4, ref('module_name.work_tag')), 
-                                    (4, ref('module_name.event_tag')), 
-                                    (4, ref('module_name.life_tag'))]"/>
-
-                            
+                            <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="start_date"/> 

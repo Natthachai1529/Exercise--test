@@ -16,23 +16,7 @@ class ExampleModel(models.Model):
         ('complete', 'COMPLETE'),
     ], default='draft')
 
-    tag_ids = fields.Many2many('product.tags', default=lambda self: self._get_default_tags())
-
-    def _get_default_tags(self):
-        tags = self.env['product.tags'].search([('name', 'in', ['Work', 'Event', 'Life'])])
-   
-        if len(tags) < 3:
-            existing_tags = tags.mapped('name')
-            if 'Work' not in existing_tags:
-                self.env['product.tags'].create({'name': 'Work'})
-            if 'Event' not in existing_tags:
-                self.env['product.tags'].create({'name': 'Event'})
-            if 'Life' not in existing_tags:
-                self.env['product.tags'].create({'name': 'Life'})
-            tags = self.env['product.tags'].search([('name', 'in', ['Work', 'Event', 'Life'])])
-
-        return tags
-
+    tag_ids = fields.Many2many(comodel_name='exercise.tag', string='Tags')
     list_ids = fields.One2many(comodel_name='model.list', inverse_name='list_id', string='Lists')
     attendee_ids = fields.One2many(comodel_name='model.attendee', inverse_name='attendee_id', string='Attendees')
 
@@ -73,7 +57,7 @@ class ListModel(models.Model):
     name = fields.Char(string='Name')
     description = fields.Char(string="Description") 
     is_complete = fields.Boolean(string='Is Complete')
-    tag_ids = fields.Many2many(comodel_name='exercise.tag', string='Tags')
+    tag_ids = fields.Many2many(comodel_name='exercise.tag', string='Tags') 
 
 class AttendeeModel(models.Model):
     _name = 'model.attendee'
