@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- View for Exercise -->
+    <record id="exercise_view_form" model="ir.ui.view">
+        <field name="name">Exercise Form</field>
+        <field name="model">exercise.model</field>
+        <field name="arch" type="xml">
+            <form string="Exercise Form">
+                <sheet>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        
+                        <button name="action_set_in_progress"
+                                string="PROGRESS"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_set_in_complete" 
+                                string="DONE" type="object" class="oe_highlight" 
+                                invisible="state != 'in_progress' or (not all_complete and state == 'in_progress')"/>
+                    </header>
+                    <group>
+                        <group> 
+                            <field name="title"/>  
+                            <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/> 
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="List" invisible="state == 'draft'"> 
+                            <field name="list_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="is_complete"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Attendee" invisible="state == 'draft'">
+                            <field name="attendee_ids">
+                                <list editable="bottom">
+                                    <field name="attendee"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View for Exercise List -->
+    <record id="exercise_view_list" model="ir.ui.view">
+        <field name="name">Exercise List</field>
+        <field name="model">exercise.model</field>
+        <field name="arch" type="xml">
+            <list string="Exercise List">
+                <field name="title"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="tag_ids"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action for Exercise -->
+    <record id="exercise_action" model="ir.actions.act_window">
+        <field name="name">Exercise</field>
+        <field name="res_model">exercise.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Main Menu for Exercise -->
+    <menuitem id="menu_exercise_main" name="Exercise" sequence="1" />
+
+    <!-- Action for All Exercises -->
+    <record id="action_all" model="ir.actions.act_window">
+        <field name="name">All Exercises</field>
+        <field name="res_model">exercise.model</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="exercise_view_list"/>
+    </record>
+
+    <menuitem id="menu_all" name="All" parent="menu_exercise_main" action="action_all" sequence="2"/>
+    
+    <!-- Action for Incomplete Exercises -->
+    <record id="action_uncomplate" model="ir.actions.act_window">
+        <field name="name">Uncompleted</field>
+        <field name="res_model">exercise.model</field>
+        <field name="domain">[('state', '!=', 'complete')]</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="exercise_view_list"/>
+    </record>
+
+    <menuitem id="menu_uncomplate" name="Uncompleted" parent="menu_exercise_main" action="action_uncomplate" sequence="3"/>
+
+    <!-- Action for Completed Exercises -->
+    <record id="action_complate" model="ir.actions.act_window">
+        <field name="name">Completed</field>
+        <field name="res_model">exercise.model</field>
+        <field name="domain">[('state', '=', 'complete')]</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="exercise_view_list"/>
+    </record>
+
+    <menuitem id="menu_complate" name="Completed" parent="menu_exercise_main" action="action_complate" sequence="4"/>
+
+    <!-- Menu for Tag -->
+    <menuitem id="menu_tag_main" name="Tags" sequence="5" parent="menu_exercise_main" />
+
+    <!-- Action for Tag -->
+    <record id="action_tag" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="res_model">exercise.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_tags" name="All Tags" parent="menu_tag_main" action="action_tag" sequence="1"/>
+
+    <!-- View for Tag -->
+    <record id="exercise_tag_form_view" model="ir.ui.view">
+        <field name="name">exercise.tag.form.view</field>
+        <field name="model">exercise.tag</field>
+        <field name="arch" type="xml">
+            <form string="Tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

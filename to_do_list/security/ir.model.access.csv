@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_exercise_model,access_exercise_model,model_exercise_model,,1,1,1,1
+access_exercise_tag,access_xercise_tag,model_exercise_tag,,1,1,1,1
+access_model_list,access_model_list,model_model_list,,1,1,1,1
+access_model_attendee,access_model_attendee,model_model_attendee,,1,1,1,1
+
